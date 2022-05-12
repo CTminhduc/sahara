@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load cart %}
+{% load custom_filter %}
+
+<!-- body -->
+
+<div style="padding-left:12%; padding-right:12%; padding-top:2%">
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="static/image/1.png" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="static/image/2.png" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="static/image/3.png" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+    <h1 class="display-5">Products</h1>
+  </div>
+</div>
+
+<div class="container-fluid mt-3">
+  <div class = "row">
+
+    <!-- all products -->
+    <div id = 'products' class = "col-lg-9 mx-auto">
+      <div class="row mx-auto">
+        {% for product in products %}
+        <div class="card mx-auto mb-3" id={{product.id}}} style="width: 18rem;">
+          <!-- image hover -->
+          <div class="figure">
+            <img class="image-main card-img-top" src="{{product.image.url}}" alt="Demo image 1">
+            <a class="" href="#" data-bs-toggle="modal" data-bs-target="#modal{{product.id}}">
+              <img class="image-hover card-img-left" height="40" width="40" src="static/image/quick.png">
+            </a>
+          </div>
+        
+        <div class="card-body">
+          <p class="card-title">{{product.name}}</p>
+          <p class="card-text"><b>{{product.price|currency}}</b></p>
+          <!-- {{product | is_in_cart:request.session.cart}} -->
+        </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="modal{{product.id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Quick View</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-6"><img src="{{product.image.url}}" class="img-fluid rounded-start" alt="....."></div>
+                    <div class="col-md-6 ms-auto"><b>{{product.name}}</b><p>{{product.category}}</p><p>{{product.description}}</p></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer p-0 no-gutters">
+                {% if product|is_in_cart:request.session.cart %}
+                <div class="row no-gutters" >
+                    <form action="/" class="col-2 " method="post">
+                        {% csrf_token %}
+                        <input hidden type="text" name='product' value='{{product.id}}'>
+                        <input hidden type="text" name='remove' value='True'>
+                        <input type="submit" value = " - " class="btn btn-block btn-secondary">
+                    </form>
+                    <div class="text-center col">{{product|cart_quantity:request.session.cart}} in Cart</div>
+                    <form action="/" class="col-3 " method="post">
+                        {% csrf_token %}
+                        <input hidden type="text" name='product' value='{{product.id}}'>
+                        <input type="submit" value = " + " class="btn btn-block btn-secondary">
+                    </form>
+                </div>
+              {% else %}
+              <form action="/#{{product.id}}" method="POST" class="btn-block">
+                  {% csrf_token %}
+                  <input hidden type="text" name='product' value='{{product.id}}'>
+                  <input type="submit" class="float-right
+                  btn-light border form-control" value="Add to Cart">
+              </form>
+              {% endif %}
+            </div>
+
+      </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <footer class="py-5">
+    <div class="row">
+
+    <div class="d-flex justify-content-between py-4 my-4 border-top">
+      <p>© 2022 Sahara Shop, Inc. All rights reserved.</p>
+      <ul class="list-unstyled d-flex">
+        <li class="ms-3">
+          <a class="link-dark" href="https://www.facebook.com/minhduc.chutran">
+            <img height="32" width="32" src="static/image/footer1.png">
+          </a>
+        </li>
+        <li class="ms-3">
+          <a class="link-dark" href="#">
+            <img height="32" width="32" src="static/image/footer2.png">
+          </a>
+        </li>
+        <li class="ms-3">
+          <a class="link-dark" href="#">
+            <img height="32" width="32" src="static/image/footer3.png">
+          </a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+</div>
+
+{% endblock %}
+
+    
