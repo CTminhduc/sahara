@@ -7,6 +7,7 @@ from .views.checkout import CheckOut
 from .views.orders import OrderView
 from .middlewares.auth import auth_middleware
 from .views.report import SearchFormView
+from .views.profile import Profile
 
 urlpatterns = [
     path('', Index.as_view(), name='homepage'),
@@ -17,4 +18,5 @@ urlpatterns = [
     path('check-out', CheckOut.as_view(), name='checkout'),
     path('orders', auth_middleware(OrderView.as_view()), name='orders'),
     path('report/', SearchFormView.as_view(), name='report'),
+    path('profile', Profile.as_view(), name='profile')
 ]
