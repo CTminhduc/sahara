@@ -62,6 +62,36 @@
       opacity: 1;
     }
   </style>
+
+  <!--style dataframe-->
+<style>
+
+    .dataframe {
+      font-size: 14pt;
+      font-family: Arial;
+      border-collapse: collapse;
+      border: 6px solid rgb(71, 134, 193);
+    }
+
+    .dataframe td, th {
+      padding: 10px;
+    }
+
+    .table {
+      font-size: 14pt;
+      font-family: Arial;
+      border-collapse: collapse;
+      border: 10px double rgb(71, 134, 193);
+    }
+
+
+    .full-width-div {
+      position: absolute;
+      width: 100%;
+      left: 0;
+    }
+  </style>
+
 </head>
 <body>
 
@@ -97,10 +127,12 @@
             <li><a class="dropdown-item" href="/?category=2">Hoodie</a></li>
             <li><a class="dropdown-item" href="/?category=3">Jacket</a></li>
             <li><a class="dropdown-item" href="/?category=4">Sweater</a></li>
-            <li><a class="dropdown-item" href="/?category=5">	Tee</a></li>
+            <li><a class="dropdown-item" href="/?category=5">Tee</a></li>
            </ul>
            {% endfor %}
          </li>
+
+
        </ul>
         
 
@@ -126,9 +158,7 @@
           <li class="nav-item ">
             <a class="nav-link active" aria-current="page" href="/login">Login</a>
           </li>
-            <li class="nav-item ">
-            <a class="nav-link active" aria-current="page" href="/profile">Profile</a>
-          </li>
+
           {% endif %}
 
           

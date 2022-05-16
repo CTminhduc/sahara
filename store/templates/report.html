@@ -1,19 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% load cart %}
-{% load custom_filter %}
-<div class="container">
-    <div class="border rounded p-4 m-4">
+
+<div class="container-fluid">
         <p class="display-3 pl-3 ml-3">Report</p>
         <hr>
-        <table class="table">
+        <table border="10" class="table">
             <tbody>
             <tr>
                 <form action="" method="POST">
                     {% csrf_token %}
                     <td>{{context.form}}</td>
-                    <button type="submit" class="btn float-right btn-outline-info col-lg-2 mt-1">Search</button>
+                    <td><button type="submit" class="btn float-right btn-outline-info col-lg-2">Search</button></td>
 
                 </form>
                 <br>
@@ -22,25 +20,47 @@
 
         </table>
 
-        <table class="dataframe">
-            {% if context.orders_df %}
-                <h3>Chart</h3>
-                <img src="data:image/png;base64, {{context.chart|safe}}">
-                <br>
-                <h3>Result By Year-Month</h3>
-                {{context.result_df|safe}}
-                <br>
-                <h3>Over View</h3>
-                {{context.orders_df|safe}}
+        <table border="10" class="dataframe">
 
-            {% else %}
-                <h3>no data</h3>
-            {% endif %}
+            <thead>
+                <tr style="text-align: center;">
+                    {% if not context.check_list_order %}
+                        {% if context.orders_df %}
+                            <h3>Chart</h3>
+                            <img src="data:image/png;base64, {{context.chart|safe}}">
+
+                            <h3>{{context.word}} By Year-Month</h3>
+                            <th></th>
+                                <td>{{context.result_df|safe}}</td>
+                        {% else %}
+                            <h3>no data</h3>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            </thead>
+
+        </table>
+
+        <table border="10" class="dataframe">
+
+            <thead>
+                <tr style="text-align: center;">
+                    {% if context.check_list_order %}
+                        {% if context.orders_df %}
+                            <br>
+                            <h3>List Total Orders</h3>
+                            <th></th>
+                            <td>{{context.orders_df|safe}}</td>
+                        {% else %}
+                            <h3>no data</h3>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            </thead>
 
         </table>
 
         </hr>
-    </div>
 
 </div>
 

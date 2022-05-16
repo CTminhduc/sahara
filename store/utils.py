@@ -1,8 +1,7 @@
-from cProfile import label
 from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
-
+import seaborn as sns
 
 
 def get_graph():
@@ -36,6 +35,19 @@ def get_data(data, res_by):
         dt = data.groupby('year-month', as_index=False)['total_price'].agg('sum')
     return dt
 
+def get_word(res_by):
+    word = None
+    if res_by == '#1':
+        word = 'Product'
+    elif res_by == '#2':
+        word = 'Revenue'
+    return word
+
+def get_check_lstOrder(res_by):
+    check = False
+    if res_by == '#3':
+        check = True
+    return check
 
 def get_chart(chart_type, data_df, result_by):
     plt.switch_backend('AGG')
