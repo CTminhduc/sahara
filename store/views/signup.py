@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.core.mail import send_mail
 from django.contrib.auth.hashers import make_password
 from store.models.customer import Customer
 from django.views import View
@@ -10,12 +10,26 @@ class Signup(View):
         return render(request, 'signup.html')
 
     def post(self, request):
+        # signup
         postData = request.POST
         first_name = postData.get('firstname')
         last_name = postData.get('lastname')
         phone = postData.get('phone')
         email = postData.get('email')
         password = postData.get('password')
+
+        # send mail
+        subject = "Đăng ký thành công"
+        message = "Cảm ơn bạn đã đăng ký!"
+
+        send_mail(
+            subject,
+            message,
+            'sahara2022python@gmail.com',
+            [email],
+            fail_silently=False,
+        )
+
         # validation
         value = {
             'first_name': first_name,
@@ -41,7 +55,8 @@ class Signup(View):
         else:
             data = {
                 'error': error_message,
-                'values': value
+                'values': value,
+                'send_mail': send_mail
             }
             return render(request, 'signup.html', data)
 
