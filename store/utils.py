@@ -1,7 +1,7 @@
 from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
-import seaborn as sns
+#import seaborn as sns
 
 
 def get_graph():
